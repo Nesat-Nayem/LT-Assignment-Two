@@ -16,13 +16,20 @@ export class ProductService {
 
   async getAllProducts() {
     const products = await Product.find();
+    if (products.length === 0) {
+      throw new Error('No products found');
+    }
     return products;
   }
   
   async searchProducts(searchTerm: string) {
     const products = await Product.find({ name: { $regex: searchTerm, $options: 'i' } });
+    if (products.length === 0) {
+      throw new Error(`No products found matching search term '${searchTerm}'`);
+    }
     return products;
   }
+  
   
 
   async getProductById(productId: string) {

@@ -29,7 +29,7 @@ const createProduct = async (req: Request, res: Response) => {
 };
 
 
- const getProducts = async (req: Request, res: Response) => {
+const getProducts = async (req: Request, res: Response) => {
   try {
     const searchTerm = req.query.searchTerm as string;
     let products;
@@ -41,11 +41,16 @@ const createProduct = async (req: Request, res: Response) => {
       products = await productService.getAllProducts();
       res.json({ success: true, message: 'Products fetched successfully!', data: products });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Internal server error', error: error });
+  } catch (error:any) {
+    if (error.message === 'No products found' || error.message.startsWith('No products found matching search term')) {
+      res.status(404).json({ success: false, message: error.message });
+    } else {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal server error', error: error });
+    }
   }
 };
+
 
 
 
