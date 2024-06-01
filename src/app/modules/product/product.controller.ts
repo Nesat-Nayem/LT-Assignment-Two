@@ -28,24 +28,25 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-const getAllProducts = async (req: Request, res: Response) => {
+
+ const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await productService.getAllProducts();
-    res.json({ success: true, message: 'Products fetched successfully!', data: products });
+    const searchTerm = req.query.searchTerm as string;
+    let products;
+
+    if (searchTerm) {
+      products = await productService.searchProducts(searchTerm);
+      res.json({ success: true, message: `Products matching search term '${searchTerm}' fetched successfully!`, data: products });
+    } else {
+      products = await productService.getAllProducts();
+      res.json({ success: true, message: 'Products fetched successfully!', data: products });
+    }
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Internal server error', error:error });
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error', error: error });
   }
 };
 
-const searchProducts = async (req: Request, res: Response) => {
-  try {
-    const searchTerm = req.query.searchTerm as string;
-    const products = await productService.searchProducts(searchTerm);
-    res.json({ success: true, message: `Products matching search term '${searchTerm}' fetched successfully!`, data: products });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Internal server error', error:error });
-  }
-};
 
 
 const getProductById = async (req: Request, res: Response) => {
@@ -99,9 +100,8 @@ const getProductById = async (req: Request, res: Response) => {
 
 export const productController = {
   createProduct,
-  getAllProducts,
+  getProducts,
   getProductById,
   updateProduct,
-  deleteProduct,
-  searchProducts
+  deleteProduct
 };

@@ -18,11 +18,12 @@ export class ProductService {
     const products = await Product.find();
     return products;
   }
-
+  
   async searchProducts(searchTerm: string) {
     const products = await Product.find({ name: { $regex: searchTerm, $options: 'i' } });
     return products;
   }
+  
 
   async getProductById(productId: string) {
     const product = await Product.findById(productId);
