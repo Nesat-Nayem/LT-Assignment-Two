@@ -3,7 +3,7 @@ import Product from '../product/product.model';
 import { validateOrder } from './order.validation';
 
 export class OrderService {
-
+// create order
 async createOrder(orderData: any) {
   const { error } = validateOrder(orderData);
   if (error) {
@@ -29,10 +29,12 @@ async createOrder(orderData: any) {
   return order;
 };
 
+// get all order
 async getAllOrders() {
   return await Order.find();
 };
 
+// get order with email
 async getOrdersByUserEmail(email: string) {
   const orders = await Order.find({ email });
   if (orders.length === 0) {

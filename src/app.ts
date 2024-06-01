@@ -14,7 +14,7 @@ app.use(cors());
 app.use('/api',router)
 
 const entryRoute = (req:Request, res:Response)=>{
-    const message = 'Sorry, this route does not exist. Please check the route name and try again.';
+    const message = 'Surver is running...';
     res.send(message)
 }
 

@@ -1,8 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { IProduct } from './product.interface';
-
-
-
 const productSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },

@@ -3,7 +3,6 @@ import { productRoutes } from '../modules/product/product.route';
 import { orderRoutes } from '../modules/order/order.route';
 
 const router = Router();
-
 const moduleRoutes = [
   {
     path: '/orders',

@@ -30,8 +30,6 @@ export class ProductService {
     return products;
   }
   
-  
-
   async getProductById(productId: string) {
     const product = await Product.findById(productId);
     return product;

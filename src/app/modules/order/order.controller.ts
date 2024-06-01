@@ -20,7 +20,6 @@ const orderService = new OrderService();
   }
 };
 
-
 const getOrders = async (req: Request, res: Response) => {
   try {
     const email = req.query.email as string;
@@ -42,8 +41,6 @@ const getOrders = async (req: Request, res: Response) => {
     }
   }
 };
-
-
 
 export const orderController = {
   createOrder,
