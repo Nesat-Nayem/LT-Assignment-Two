@@ -37,6 +37,17 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+const searchProducts = async (req: Request, res: Response) => {
+  try {
+    const searchTerm = req.query.searchTerm as string;
+    const products = await productService.searchProducts(searchTerm);
+    res.json({ success: true, message: `Products matching search term '${searchTerm}' fetched successfully!`, data: products });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Internal server error', error:error });
+  }
+};
+
+
 const getProductById = async (req: Request, res: Response) => {
     try {
       const product = await productService.getProductById(req.params.productId);
@@ -78,16 +89,7 @@ const getProductById = async (req: Request, res: Response) => {
     };
 
 
-    const searchProducts = async (req: Request, res: Response) => {
-        try {
-          const searchTerm = req.query.searchTerm as string;
-          const products = await productService.searchProducts(searchTerm);
-          res.json({ success: true, message: `Products matching search term '${searchTerm}' fetched successfully!`, data: products });
-        } catch (error) {
-          res.status(500).json({ success: false, message: 'Internal server error', error:error });
-        }
-      };
-    
+
 
 
 

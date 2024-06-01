@@ -19,6 +19,11 @@ export class ProductService {
     return products;
   }
 
+  async searchProducts(searchTerm: string) {
+    const products = await Product.find({ name: { $regex: searchTerm, $options: 'i' } });
+    return products;
+  }
+
   async getProductById(productId: string) {
     const product = await Product.findById(productId);
     return product;
@@ -39,10 +44,7 @@ export class ProductService {
     return product;
   }
 
-  async searchProducts(searchTerm: string) {
-    const products = await Product.find({ name: { $regex: searchTerm, $options: 'i' } });
-    return products;
-  }
+
 
 
 }
