@@ -33,5 +33,10 @@ export class ProductService {
     return product;
   }
 
-  
+  async deleteProduct(productId: string) {
+    const product = await Product.findByIdAndDelete(productId);
+    return product;
+  }
+
+
 }

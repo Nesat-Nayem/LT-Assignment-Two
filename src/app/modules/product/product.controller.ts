@@ -63,11 +63,29 @@ const getProductById = async (req: Request, res: Response) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
       }
     }
-  };
+};
+    
+    const deleteProduct = async (req: Request, res: Response) => {
+      try {
+        const product = await productService.deleteProduct(req.params.productId);
+        if (!product) {
+          return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+        res.json({ success: true, message: 'Product deleted successfully!', data: null });
+      } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal server error' });
+      }
+    };
+    
+
+
+
+
 
 export const productController = {
   createProduct,
   getAllProducts,
   getProductById,
-  updateProduct
+  updateProduct,
+  deleteProduct
 };
