@@ -34,8 +34,13 @@ async getAllOrders() {
 };
 
 async getOrdersByUserEmail(email: string) {
-  return await Order.find({ email });
+  const orders = await Order.find({ email });
+  if (orders.length === 0) {
+    throw new Error('No orders found for the given email');
+  }
+  return orders;
 };
+
 
 
 }

@@ -16,12 +16,12 @@ const orderService = new OrderService();
     res.status(201).json({ success: true, message: 'Order created successfully!', data: order });
   } catch (error:any) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Internal server error', error:error.message });
+    res.status(500).json({ success: false,  message:error.message });
   }
 };
 
 
- const getOrders = async (req: Request, res: Response) => {
+const getOrders = async (req: Request, res: Response) => {
   try {
     const email = req.query.email as string;
     let orders;
@@ -33,11 +33,16 @@ const orderService = new OrderService();
       orders = await orderService.getAllOrders();
       res.json({ success: true, message: 'Orders fetched successfully!', data: orders });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+  } catch (error:any) {
+    if (error.message === 'No orders found for the given email') {
+      res.status(404).json({ success: false, message: 'Order not found' });
+    } else {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
   }
 };
+
 
 
 export const orderController = {
