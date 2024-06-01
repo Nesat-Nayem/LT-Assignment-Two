@@ -2,6 +2,7 @@ import Product from "./product.model";
 import { validateProduct } from "./product.validation";
 
 export class ProductService {
+  
   async createProduct(productData: any) {
     const { error } = validateProduct(productData);
     if (error) {
@@ -36,6 +37,11 @@ export class ProductService {
   async deleteProduct(productId: string) {
     const product = await Product.findByIdAndDelete(productId);
     return product;
+  }
+
+  async searchProducts(searchTerm: string) {
+    const products = await Product.find({ name: { $regex: searchTerm, $options: 'i' } });
+    return products;
   }
 
 

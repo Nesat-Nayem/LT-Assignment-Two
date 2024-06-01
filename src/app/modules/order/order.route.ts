@@ -1,9 +1,12 @@
 import express from 'express';
+import { orderController } from './order.controller';
+
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("route test on from order");
-});
+router.post('/', orderController.createOrder);
+router.get('/', orderController.getOrders);
+
+
 
 export const orderRoutes = router;
