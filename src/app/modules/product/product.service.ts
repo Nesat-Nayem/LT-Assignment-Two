@@ -22,4 +22,16 @@ export class ProductService {
     const product = await Product.findById(productId);
     return product;
   }
+
+  async updateProduct(productId: string, productData: any) {
+    const { error } = validateProduct(productData);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
+
+    const product = await Product.findByIdAndUpdate(productId, productData, { new: true });
+    return product;
+  }
+
+  
 }
