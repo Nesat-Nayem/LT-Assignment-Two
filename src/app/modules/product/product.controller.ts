@@ -37,7 +37,20 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+const getProductById = async (req: Request, res: Response) => {
+    try {
+      const product = await productService.getProductById(req.params.productId);
+      if (!product) {
+        return res.status(404).json({ success: false, message: 'Product not found' });
+      }
+      res.json({ success: true, message: 'Product fetched successfully!', data: product });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  };
+
 export const productController = {
   createProduct,
-  getAllProducts
+  getAllProducts,
+  getProductById
 };
